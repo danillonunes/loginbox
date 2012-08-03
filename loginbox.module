@@ -13,6 +13,17 @@ function loginbox() {
 }
 
 /**
+ * Implementation of hook_init().
+ */
+function loginbox_init() {
+  global $user;
+
+  if ($user->uid < 1) {
+    loginbox_add_assets();
+  }
+}
+
+/**
  * Implementation of hook_theme().
  */
 function loginbox_theme() {
@@ -26,6 +37,15 @@ function loginbox_theme() {
  */
 function theme_loginbox($content) {
   return '<div id="loginbox">' . $content . '</div>';
+}
+
+/**
+ * Add Login-box external files.
+ */
+function loginbox_add_assets() {
+  $path = drupal_get_path('module', 'loginbox');
+  drupal_add_css($path . '/css/loginbox.css');
+  drupal_add_js($path . '/js/loginbox.js');
 }
 
 /**
