@@ -3,3 +3,17 @@
  * @file
  * Inserts into all your pages a lightbox style login form.
  */
+
+/**
+ * Return the rendered Login-box HTML box.
+ */
+function loginbox() {
+  return drupal_get_form('user_login_block');
+}
+
+/**
+ * Implementation of hook_preprocess_page().
+ */
+function loginbox_preprocess_page(&$vars) {
+  $vars['closure'] .= loginbox();
+}
