@@ -1,2 +1,3 @@
 name = Login-box
 description = Inserts into all your pages a lightbox style login form.
+core = 6.x
