@@ -8,7 +8,24 @@
  * Return the rendered Login-box HTML box.
  */
 function loginbox() {
-  return drupal_get_form('user_login_block');
+  $form = drupal_get_form('user_login_block');
+  return theme('loginbox', $form);
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function loginbox_theme() {
+  return array(
+    'loginbox' => array('content' => NULL),
+  );
+}
+
+/**
+ * Render Login-box box into it's own HTML.
+ */
+function theme_loginbox($content) {
+  return '<div id="loginbox">' . $content . '</div>';
 }
 
 /**
