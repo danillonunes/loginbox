@@ -56,6 +56,9 @@ function loginbox_add_assets() {
   // Login-box overlay.
   drupal_add_css($path . '/css/loginbox.overlay.css');
   drupal_add_js($path . '/js/loginbox.overlay.js');
+
+  // Login-box close button.
+  drupal_add_js($path . '/js/loginbox.close.js');
 }
 
 /**
