@@ -24,34 +24,34 @@ Drupal.loginBox.invokeAll = function(hook) {
 };
 
 /**
- * Add appear and disappear events to Login-box.
+ * Add open and close events to Login-box.
  */
 Drupal.behaviors.loginbox = function(context) {
   var $loginbox = $('#loginbox', context);
 
-  Drupal.loginBox.beforeAppear = Drupal.loginBox.beforeAppear || {};
-  Drupal.loginBox.beforeDisappear = Drupal.loginBox.beforeDisappear || {};
+  Drupal.loginBox.beforeOpen = Drupal.loginBox.beforeOpen || {};
+  Drupal.loginBox.beforeClose = Drupal.loginBox.beforeClose || {};
 
-  Drupal.loginBox.afterAppear = Drupal.loginBox.afterAppear || {};
-  Drupal.loginBox.afterDisappear = Drupal.loginBox.afterDisappear || {};
+  Drupal.loginBox.afterOpen = Drupal.loginBox.afterOpen || {};
+  Drupal.loginBox.afterClose = Drupal.loginBox.afterClose || {};
 
   $loginbox
-    .bind('appear', function() {
-      Drupal.loginBox.invokeAll('beforeAppear');
+    .bind('open', function() {
+      Drupal.loginBox.invokeAll('beforeOpen');
       $loginbox.show();
-      Drupal.loginBox.invokeAll('afterAppear');
+      Drupal.loginBox.invokeAll('afterOpen');
     })
-    .bind('disappear', function() {
-      Drupal.loginBox.invokeAll('beforeDisappear');
+    .bind('close', function() {
+      Drupal.loginBox.invokeAll('beforeClose');
       $loginbox.hide();
-      Drupal.loginBox.invokeAll('afterDisappear');
+      Drupal.loginBox.invokeAll('afterClose');
     })
     .bind('toggle', function() {
       if ($loginbox.is(':hidden')) {
-        $loginbox.trigger('appear');
+        $loginbox.trigger('open');
       }
       else {
-        $loginbox.trigger('disappear');
+        $loginbox.trigger('close');
       }
     });
 };

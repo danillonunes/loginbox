@@ -7,11 +7,11 @@ Drupal.behaviors.loginboxOverlay = function(context) {
 
   $overlay.insertBefore($loginbox);
 
-  Drupal.loginBox.beforeAppear.overlay = function() {
+  Drupal.loginBox.beforeOpen.overlay = function() {
     $overlay.show();
   };
 
-  Drupal.loginBox.beforeDisappear.overlay = function() {
+  Drupal.loginBox.beforeClose.overlay = function() {
     $overlay.hide();
   };
 };
