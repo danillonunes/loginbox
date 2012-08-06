@@ -49,6 +49,10 @@ function loginbox_add_assets() {
   drupal_add_css($path . '/css/loginbox.css');
   drupal_add_js($path . '/js/loginbox.js');
 
+  // Login-box default theme.
+  drupal_add_css($path . '/css/loginbox.default.css');
+  drupal_add_js($path . '/js/loginbox.default.js');
+
   // Login-box overlay.
   drupal_add_css($path . '/css/loginbox.overlay.css');
   drupal_add_js($path . '/js/loginbox.overlay.js');
