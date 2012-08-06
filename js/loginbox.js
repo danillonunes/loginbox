@@ -45,5 +45,13 @@ Drupal.behaviors.loginbox = function(context) {
       Drupal.loginBox.invokeAll('beforeDisappear');
       $loginbox.hide();
       Drupal.loginBox.invokeAll('afterDisappear');
+    })
+    .bind('toggle', function() {
+      if ($loginbox.is(':hidden')) {
+        $loginbox.trigger('appear');
+      }
+      else {
+        $loginbox.trigger('disappear');
+      }
     });
 };
