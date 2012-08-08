@@ -55,3 +55,15 @@ Drupal.behaviors.loginboxCloseKey = function(context) {
       $document.unbind('keyup.loginboxCloseKey');
     });
 };
+
+/**
+ * Focus the first input when open Login-box.
+ */
+Drupal.behaviors.loginboxFocus = function(context) {
+  var $loginbox = $('#loginbox', context);
+
+  $loginbox
+    .bind('afterOpen.focus', function() {
+      $loginbox.find('input:first').trigger('focus');
+    });
+};
