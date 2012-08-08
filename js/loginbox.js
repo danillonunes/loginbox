@@ -1,8 +1,9 @@
 
 /**
- * Initialize global Login-box variable.
+ * Initialize global Login-box object and it's settings variables.
  */
 Drupal.loginBox = Drupal.loginBox || {};
+Drupal.settings.loginBox = Drupal.settings.loginBox || {};
 
 /**
  * Add open and close events to Login-box.
@@ -30,5 +31,27 @@ Drupal.behaviors.loginbox = function(context) {
       else {
         $loginbox.trigger('close');
       }
+    });
+};
+
+/**
+ * Close Login-box whith Esc.
+ */
+Drupal.behaviors.loginboxCloseKey = function(context) {
+  var $document = $(document),
+      $loginbox = $('#loginbox', context),
+      closeKey = Drupal.settings.loginBox.closeKey || 27;
+
+  $loginbox
+    .bind('afterOpen.closeKey', function() {
+      $document
+        .bind('keyup.loginboxCloseKey', function(event) {
+          if (event.keyCode == closeKey) {
+            $loginbox.trigger('close');
+          }
+        });
+    })
+    .bind('beforeClose.closeKey', function() {
+      $document.unbind('keyup.loginboxCloseKey');
     });
 };
