@@ -30,6 +30,18 @@ Drupal.behaviors.loginboxOverlay = function(context) {
 };
 
 /**
+ * Close Login-box clicking on overlay.
+ */
+Drupal.behaviors.loginboxOverlayClose = function(context) {
+  var $loginbox = $('#loginbox', context),
+      $overlay = $('#loginbox-overlay', context);
+
+  $overlay.bind('click.close', function() {
+    $loginbox.trigger('close');
+  })
+};
+
+/**
  * Return Login-box Overlay default settings.
  *
  * The overlay is faded in/out by default.
