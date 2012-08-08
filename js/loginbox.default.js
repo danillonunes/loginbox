@@ -47,9 +47,9 @@ Drupal.behaviors.loginboxDefaultCentralize = function(context) {
     });
   }
 
-  Drupal.loginBox.afterOpen.defaultCentralize = function() {
+  $loginbox.bind('afterOpen.defaultCentralize', function() {
     centralize();
-  };
+  });
 
   blink();
 };

@@ -12,21 +12,21 @@ Drupal.behaviors.loginboxOverlay = function(context) {
 
   $overlay.insertBefore($loginbox);
 
-  Drupal.loginBox.beforeOpen.overlay = function() {
-    var settings = Drupal.loginBox.overlay.settings();
-    if ($.isFunction(settings.open.start)) {
-      settings.open.start.call($overlay);
-    }
-    $overlay.animate(settings.open.animate.properties, settings.open.animate.options);
-  };
-
-  Drupal.loginBox.beforeClose.overlay = function() {
-    var settings = Drupal.loginBox.overlay.settings();
-    if ($.isFunction(settings.close.start)) {
-      settings.close.start.call($overlay);
-    }
-    $overlay.animate(settings.close.animate.properties, settings.close.animate.options);
-  };
+  $loginbox
+    .bind('beforeOpen.overlay', function() {
+      var settings = Drupal.loginBox.overlay.settings();
+      if ($.isFunction(settings.open.start)) {
+        settings.open.start.call($overlay);
+      }
+      $overlay.animate(settings.open.animate.properties, settings.open.animate.options);
+    })
+    .bind('beforeClose.overlay', function() {
+      var settings = Drupal.loginBox.overlay.settings();
+      if ($.isFunction(settings.close.start)) {
+        settings.close.start.call($overlay);
+      }
+      $overlay.animate(settings.close.animate.properties, settings.close.animate.options);
+    });
 };
 
 /**
