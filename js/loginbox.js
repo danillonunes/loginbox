@@ -40,14 +40,21 @@ Drupal.behaviors.loginbox = function(context) {
 Drupal.behaviors.loginboxAjaxSubmit = function(context) {
   var $loginbox = $('#loginbox', context),
       $form = $loginbox.find('form:first'),
-      $messages = $form.find('.messages-wrapper');
+      $messages = $form.find('.messages-wrapper'),
+      $loading = $form.find('.loading');
 
   if (!$messages.length) {
     $messages = $('<div class="messages-wrapper" />');
     $messages.prependTo($form);
   }
 
+  if (!$loading.length) {
+    $loading = $('<div class="loading" />');
+    $loading.hide().appendTo($form);
+  }
+
   $loginbox.bind('submit', function(event) {
+    $loading.text(Drupal.t('Loading')).show();
     $messages.empty();
 
     $form.ajaxSubmit({
@@ -68,6 +75,8 @@ Drupal.behaviors.loginboxAjaxSubmit = function(context) {
         if (data.destination) {
           window.location = Drupal.settings.basePath + data.destination;
         }
+
+        $loading.empty().hide();
       }
     });
 
