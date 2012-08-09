@@ -8,7 +8,7 @@
  * Return the rendered Login-box HTML box.
  */
 function loginbox() {
-  $form = drupal_get_form('user_login_block');
+  $form = drupal_get_form('loginbox_user_login');
   return theme('loginbox', $form);
 }
 
@@ -30,6 +30,60 @@ function loginbox_theme() {
   return array(
     'loginbox' => array('content' => NULL),
   );
+}
+
+/**
+ * Return the user login form.
+ */
+function loginbox_user_login() {
+  $form = user_login_block();
+
+  $form['#validate'][] = 'loginbox_user_login_ajax_validate';
+
+  array_unshift($form['#submit'], 'loginbox_user_login_submit');
+
+  return $form;
+}
+
+/**
+ * Returns an ajax response to user login validation errrors.
+ */
+function loginbox_user_login_ajax_validate($form, &$form_state) {
+  $errors = form_set_error();
+  if (!empty($errors) && loginbox_is_ajax_request()) {
+    drupal_get_messages(NULL, TRUE);
+    drupal_json(array('errors' => $errors));
+    exit;
+  }
+}
+
+/**
+ * Reponse to user login form.
+ */
+function loginbox_user_login_submit($form, &$form_state) {
+  global $user;
+
+  if ($user->uid && loginbox_is_ajax_request()) {
+    $destination = drupal_get_destination();
+    $destination = str_replace('destination=', '', $destination);
+    $destination = urldecode($destination);
+
+    drupal_json(array('destination' => $destination));
+    exit;
+  }
+
+  // Call default user login submit.
+  return user_login_submit($form, &$form_state);
+}
+
+/**
+ * Check if this is a ajax request.
+ *
+ * @return
+ *   TRUE if it's an ajax request. FALSE if not.
+ */
+function loginbox_is_ajax_request() {
+  return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest');
 }
 
 /**
