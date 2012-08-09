@@ -35,6 +35,48 @@ Drupal.behaviors.loginbox = function(context) {
 };
 
 /**
+ * Submit Login-box with ajax.
+ */
+Drupal.behaviors.loginboxAjaxSubmit = function(context) {
+  var $loginbox = $('#loginbox', context),
+      $form = $loginbox.find('form:first'),
+      $messages = $form.find('.messages-wrapper');
+
+  if (!$messages.length) {
+    $messages = $('<div class="messages-wrapper" />');
+    $messages.prependTo($form);
+  }
+
+  $loginbox.bind('submit', function(event) {
+    $messages.empty();
+
+    $form.ajaxSubmit({
+      dataType: 'json',
+      success: function(data, textStatus, jqXHR) {
+        if (data.errors) {
+          $.each(data.errors, function(name, message) {
+            var $message = $('<div class="messages error">' + Drupal.t(message) + '</div>');
+            $message.appendTo($messages);
+            setTimeout(function() {
+              $message.fadeOut('normal', function() {
+                $message.remove();
+              })
+            }, 10 * 1000);
+          });
+        }
+
+        if (data.destination) {
+          window.location = Drupal.settings.basePath + data.destination;
+        }
+      }
+    });
+
+    event.preventDefault();
+    event.stopPropagation();
+  });
+};
+
+/**
  * Close Login-box whith Esc.
  */
 Drupal.behaviors.loginboxCloseKey = function(context) {
