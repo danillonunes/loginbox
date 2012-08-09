@@ -121,5 +121,9 @@ function loginbox_add_assets() {
  * Implementation of hook_preprocess_page().
  */
 function loginbox_preprocess_page(&$vars) {
-  $vars['closure'] .= loginbox();
+  global $user;
+
+  if ($user->uid < 1) {
+    $vars['closure'] .= loginbox();
+  }
 }
