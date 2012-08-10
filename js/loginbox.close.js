@@ -6,7 +6,7 @@ Drupal.behaviors.loginboxClose = function(context) {
       $close = $('<button class="loginbox-close">' + Drupal.t('Close') + '</button>');
 
   $close
-    .appendTo($loginbox)
+    .prependTo($loginbox)
     .bind('click', function() {
       $loginbox.trigger('close');
     });
